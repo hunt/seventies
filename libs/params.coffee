@@ -1,0 +1,1 @@
+route = module.exports = (app) ->

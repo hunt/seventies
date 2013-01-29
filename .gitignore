@@ -1,0 +1,16 @@
+.DS_Store
+node_modules
+log
+upload
+tmp/*
+*.sublime*
+views/sector.jade.bak
+views/stock/related.jade.bak
+public/assets_build/global.css
+public/assets_build/global.js
+public/static
+public/generated
+builtAssets/*
+npm-debug.log
+*.bak*
+*.rdb
