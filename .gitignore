@@ -11,6 +11,7 @@ public/assets_build/global.js
 public/static
 public/generated
 builtAssets/*
+public/min/*
 npm-debug.log
 *.bak*
 *.rdb
