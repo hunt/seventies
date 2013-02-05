@@ -10,7 +10,7 @@ app.config = require './config'
 
 # app helper
 helper = require './libs/helper'
-bundle_up = require 'bundle-up'
+bundle_up = require 'bundle-up2'
 
 app.configure ->
   app.set 'env', process.env.NODE_ENV or 'development'
