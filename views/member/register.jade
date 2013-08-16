@@ -1,0 +1,8 @@
+extends ../layout
+
+block content
+  form.form-signin(action='/register', method='post')
+    h2.form-signin-heading Register
+    input.form-control(type='text', name="login", placeholder='Email address', autofocus='')
+    input.form-control(type='password', name="password", placeholder='Password')
+    button.btn.btn-large.btn-primary.btn-block(type='submit') Register
