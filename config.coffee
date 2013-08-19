@@ -16,9 +16,6 @@ config =
     google:
       app_id: process.env.GOOGLE_APP_ID or '179193246032.apps.googleusercontent.com'
       secret: process.env.GOOGLE_SECRET or '9deFSd82Lba7NhzNLQoiwY1F'
-    github:
-      app_id: process.env.GITHUB_APP_ID or 'bf5c662c8ad88e3713c1'
-      secret: process.env.GITHUB_SECRET or '4400836cb86ca5e1166b7f4f7a25873e9153a0c9'
     mongodb: process.env.MONGO_URI or process.env.MONGOLAB_URI or 'mongodb://localhost:27017/norndo'
     redis:
       port: '10329'
@@ -39,9 +36,6 @@ config =
     google:
       app_id: process.env.GOOGLE_APP_ID or '179193246032.apps.googleusercontent.com'
       secret: process.env.GOOGLE_SECRET or '9deFSd82Lba7NhzNLQoiwY1F'
-    github:
-      app_id: process.env.GITHUB_APP_ID or 'bf5c662c8ad88e3713c1'
-      secret: process.env.GITHUB_SECRET or '4400836cb86ca5e1166b7f4f7a25873e9153a0c9'
     mongodb: process.env.MONGO_URI or process.env.MONGOLAB_URI or 'mongodb://localhost:27017/seventies'
     redis:
       url: process.env.REDIS_URL or 'redis://:@localhost:6379'

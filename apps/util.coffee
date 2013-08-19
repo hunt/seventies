@@ -10,3 +10,10 @@ route = module.exports = (app) ->
       session: req.session
       ip: req_ip
     res.json data
+
+  app.get '/redirect', (req, res) ->
+    if req.session.redirectTo?
+      path = req.session.redirectTo
+    else
+      path = "/"
+    res.redirect path

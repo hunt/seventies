@@ -24,7 +24,7 @@ redis.on 'error', (err) ->
 # loading models
 for file in fs.readdirSync './models'
   continue if file.search(/\.bak|\.disabled|^\./) > -1
-  if file.search(/\.coffee/) < -1
+  if file.search(/\.coffee/) < 0
     for file_sub in fs.readdirSync './models/' + file
       continue if file_sub.search(/\.bak|\.disabled|^\./) > -1
       require("./models/#{file}/#{file_sub}")
@@ -95,7 +95,7 @@ require('./libs/params')(app)
 # loadding applications
 for file in fs.readdirSync './apps'
   continue if file.search(/\.bak|\.disabled|^\./) > -1
-  if file.search(/\.coffee/) < -1
+  if file.search(/\.coffee/) < 0
     for file_sub in fs.readdirSync './apps/' + file
       continue if file_sub.search(/\.bak|\.disabled|^\./) > -1
       require("./apps/#{file}/#{file_sub}")(app)

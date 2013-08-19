@@ -4,8 +4,42 @@ Member = mongoose.model 'Member'
 
 module.exports = everyauth
 
+helper =
+  addUser: (data, callback) ->
+    console.log "add user", data
+    temp =
+      id: data.id
+      name: data.name
+      link: data.link
+      login: data.username or data.given_name
+      avatar: data.picture or ""
+      gender: data.gender or ""
+      email: data.email or ""
+      status: data.status or "true"
+
+    Member.createData temp, (result) ->
+      member = {}
+      member.id = result
+      member.data = temp
+      console.log "id", result
+      callback member
+
+  updateUser: (data, callback) ->
+    Member.updateData { id: data.id }, data, (result) ->
+      member = {}
+      member.id = result
+      member.data = data
+      callback member
+
+  checkAuth: (id, callback) ->
+    Member.findData { id: id }, (result) ->
+      callback result.length
+
+  loadData: (id, callback) ->
+    Member.findData { id: id } , (result) ->
+      callback result[0]
+
 usersById = {}
-usersByFbId = {}
 
 everyauth.everymodule
   .findUserById (id, callback) ->
@@ -15,10 +49,16 @@ everyauth
   .facebook
     .appId(app.config.facebook.app_id)
     .appSecret(app.config.facebook.secret)
-    .scope('email, user_birthday, user_likes, user_work_history, user_about_me, user_relationships, user_hometown, publish_actions, user_education_history, user_interests, user_subscriptions, user_status, user_location, user_groups')
+    .scope('email, user_about_me, publish_actions')
     .findOrCreateUser( (session, accessToken, accessTokenExtra, fbUserMetadata) ->
-      # console.log fbUserMetadata
-      usersByFbId[fbUserMetadata.id] = fbUserMetadata
+      helper.checkAuth fbUserMetadata.id, (result) ->
+        if result == 1
+          helper.updateUser fbUserMetadata, (result) ->
+            helper.loadData fbUserMetadata.id, (result) ->
+              usersById[fbUserMetadata.id] = result
+        else
+          helper.addUser fbUserMetadata, (result) ->
+            usersById[result.id] = result.data
     )
     .redirectPath('/')
 
@@ -29,82 +69,15 @@ everyauth
     .scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
     .findOrCreateUser( (session, token, extra, googleUser) ->
       console.log googleUser
-      return googleUser
+      helper.checkAuth googleUser.id, (result) ->
+        if result == 1
+          helper.updateUser googleUser, (result) ->
+            helper.loadData googleUser.id, (result) ->
+              usersById[googleUser.id] = result
+        else
+          helper.addUser googleUser, (result) ->
+            usersById[result.id] = result.data
     )
     .redirectPath('/')
 
-everyauth.github
-  .appId(app.config.github.app_id)
-  .appSecret(app.config.github.secret)
-  .scope('repo')
-  .findOrCreateUser( (session, accessToken, accessTokenExtra, githubUserMetadata) ->
-    console.log githubUserMetadata
-    return githubUserMetadata
-  )
-  .redirectPath('/')
-
-everyauth.password
-  .loginWith('email')
-  .getLoginPath('/authlogin')
-  .postLoginPath('/login')
-  .loginView('login')
-  .loginLocals( (req, res, done) ->
-    setTimeout () ->
-      done null, { title: 'Async login'}
-    , 200
-  )
-  .authenticate( (login, password) ->
-    errors = []
-    if !login then errors.push 'Missing login'
-    if !password then errors.push 'Missing password'
-    if errors.length
-      return errors
-
-    promise = this.Promise();
-    Member.findOne { email: login }, (err, user) ->
-      if err?
-        errors.push err.message || err
-      if !user?
-        errors.push 'User with login ' + login + ' does not exist.'
-      if user.password != password
-        errors.push "Wrong password."
-      if errors.length
-        promise.fulfill errors
-      else
-        usersById[user._id] = user
-        promise.fulfill user
-    return promise
-  )
-  .getRegisterPath('/authregister')
-  .postRegisterPath('/register')
-  .registerLocals( (req, res, done) ->
-    setTimeout () ->
-      done null, { title: 'Async Register' }
-    , 200
-  )
-  .validateRegistration( (newUserAttrs, errors) ->
-    promise = this.Promise()
-    Member.findOne { email: newUserAttrs.email }, (err, member) ->
-      if member?
-        errors.push 'Email already taken'
-        promise.fulfill errors
-      else
-        promise.fulfill member
-    return promise
-  )
-  .registerUser( (newUserAttrs) ->
-    promise = this.Promise()
-    obj = new Member newUserAttrs
-
-    obj.save (err, member) ->
-      if err?
-        return promise.fail err
-      else
-        usersById[member._id] = member
-      return promise.fulfill member
-    return promise
-  )
-  .loginSuccessRedirect('/')
-  .registerSuccessRedirect('/')
-
-everyauth.everymodule.logoutRedirectPath '/beta'
+everyauth.everymodule.logoutRedirectPath '/'
