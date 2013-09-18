@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  - if ('undefined' !== typeof errors && errors.length)
+    ul#errors
+      - each error in errors
+        li.error= error
+  form(action='/login', method='post')
+    #login
+      label(for=everyauth.password.loginFormFieldName) Login
+      input(type='text', name=everyauth.password.loginFormFieldName, value=email)
+    #password
+      label(for=everyauth.password.passwordFormFieldName) Password
+      input(type='password', name=everyauth.password.passwordFormFieldName)
+    #submit
+      input(type='submit') Login
+
+//-   .container
+//-     section.widget.login-widget
+//-       header.text-align-center
+//-         h4 Login to your account
+      //- form.form-signin(action='/login', method='post')
+      //-   h2.form-signin-heading Please sign in
+      //-   input.form-control(type='text', name="login", placeholder='Email address', autofocus='')
+      //-   input.form-control(type='password', name="password", placeholder='Password')
+      //-   label.checkbox
+      //-     input(type='checkbox', value='remember-me')
+      //-     | Remember me
+      //-   button.btn.btn-large.btn-primary.btn-block(type='submit') Sign in
