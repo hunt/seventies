@@ -34,7 +34,7 @@ for file in fs.readdirSync './models'
 # require "./models/#{file}" for file in fs.readdirSync './models'
 
 # app helper
-helper = require './libs/helper'
+global.helper = require './libs/helper'
 bundle_up = require 'bundle-up2'
 everyauth = require './libs/auth'
 
@@ -50,7 +50,7 @@ app.configure ->
   mongo = mongoose.connect app.config.mongodb
   mongoose.connection.on 'error', (err) ->
     console.log 'Mongoose error:', err
-  mongoose.set 'debug', true
+  # mongoose.set 'debug', true
   everyauth.debug = true
 
   # bundle up
