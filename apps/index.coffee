@@ -1,4 +1,4 @@
 route = module.exports = (app) ->
 
-  app.get '/', (req, res) ->
+  app.get '/', helper.checkAuth, (req, res) ->
     res.render 'index', { title: 'Home' }

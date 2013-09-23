@@ -1,3 +1,5 @@
+Member = mongoose.model 'Member'
+
 module.exports = 
   
   init: (req,res,next) ->
@@ -6,4 +8,8 @@ module.exports =
     res.locals.current_path = req.path
     res.locals.site_name = req.app.config.site_name
     global.req_ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+    next()
+
+  checkAuth: (req, res, next) ->
+    res.locals.session = req.session
     next()

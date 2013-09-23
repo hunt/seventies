@@ -14,9 +14,9 @@ config =
       app_id: process.env.FACEBOOK_APP_ID or '598041656875799'
       secret: process.env.FACEBOOK_SECRET or '76a3a3424e4970399d13d099aa03c88d'
     google:
-      app_id: process.env.GOOGLE_APP_ID or '179193246032.apps.googleusercontent.com'
-      secret: process.env.GOOGLE_SECRET or '9deFSd82Lba7NhzNLQoiwY1F'
-    mongodb: process.env.MONGO_URI or process.env.MONGOLAB_URI or 'mongodb://localhost:27017/norndo'
+      app_id: process.env.GOOGLE_APP_ID or '819425929101.apps.googleusercontent.com'
+      secret: process.env.GOOGLE_SECRET or 'BmBXuor-QHzLMgVHKBE_KYBB'
+    mongodb: process.env.MONGO_URI or process.env.MONGOLAB_URI or 'mongodb://localhost:27017/seventies'
     redis:
       port: '10329'
       url: process.env.REDISTOGO_URL or process.env.REDIS_URL or 'redis://:@localhost:6379'
@@ -34,8 +34,8 @@ config =
       app_id: process.env.FACEBOOK_APP_ID or '598041656875799'
       secret: process.env.FACEBOOK_SECRET or '76a3a3424e4970399d13d099aa03c88d'
     google:
-      app_id: process.env.GOOGLE_APP_ID or '179193246032.apps.googleusercontent.com'
-      secret: process.env.GOOGLE_SECRET or '9deFSd82Lba7NhzNLQoiwY1F'
+      app_id: process.env.GOOGLE_APP_ID or '819425929101.apps.googleusercontent.com'
+      secret: process.env.GOOGLE_SECRET or 'BmBXuor-QHzLMgVHKBE_KYBB'
     mongodb: process.env.MONGO_URI or process.env.MONGOLAB_URI or 'mongodb://localhost:27017/seventies'
     redis:
       url: process.env.REDIS_URL or 'redis://:@localhost:6379'
