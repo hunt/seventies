@@ -5,10 +5,9 @@ env = process.env.NODE_ENV || 'development'
 
 boot = function(){
   require("coffee-script");
-  // require("iced-coffee-script");
   if(env=='development') require('coffee-trace');
   require('http').globalAgent.maxSockets = Infinity // Infinity concurrent per host
-  require('./app');
+  require('./app');  
 }
 
 if (cluster.isMaster && env != 'development') {
