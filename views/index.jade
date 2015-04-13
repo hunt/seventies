@@ -18,7 +18,7 @@ block content
       p
         - if(session.auth != null && session.auth.google != null)
           p
-            img(src="https://www.google.com/s2/photos/profile/#{session.auth.google.user.id}?sz=50")
+            img(src="#{session.auth.google.user.picture}?sz=50")
             span= session.auth.google.user.name
         - else
           a.btn.btn-danger(href='/auth/google') Log in with Google
@@ -28,4 +28,4 @@ block content
 
   #footer
     .container
-      
+
